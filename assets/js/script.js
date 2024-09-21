@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 let gameType = this.getAttribute("data-type");
                 runGame(gameType);
             }
-        })
+        });
     }
 
     runGame("addition");
 
-})
+});
 
 /**
  * The main game "loop", called when the script is first loaded
@@ -33,6 +33,8 @@ function runGame(gameType) {
         displayAdditionQuestion(num1, num2);
     } else if (gameType === "multiply") {
         displayMultiplyQuestion(num1, num2);
+    } else if (gameType === "subtract") {
+        displaySubtractQuestion(num1, num2);
     } else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type: ${gameType}. Aborting!`;
@@ -43,7 +45,7 @@ function runGame(gameType) {
 
 /**
  * Checks the answer against the first element in
- * the returned calculatedCorrectAnswer array
+ * the returned calculateCorrectAnswer array
  */
 function checkAnswer() {
     
@@ -55,7 +57,7 @@ function checkAnswer() {
         alert("Hey! You got it right! :D");
         incrementScore();
     } else {
-        alert(`Awww.... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`);
+        alert(`Awwww.... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`);
         incrementWrongAnswer();
     }
 
@@ -78,6 +80,8 @@ function calculateCorrectAnswer() {
         return [operand1 + operand2, "addition"];
     } else if (operator === "x") {
         return [operand1 * operand2, "multiply"];
+    } else if (operator === "-") {
+        return [operand1 - operand2, "subtract"];
     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}. Aborting!`;
@@ -113,7 +117,11 @@ function displayAdditionQuestion(operand1, operand2) {
 
 }
 
-function displaySubtractQuestion() {
+function displaySubtractQuestion(operand1, operand2) {
+
+    document.getElementById("operand1").textContent = operand1 > operand2 ? operand1 : operand2;
+    document.getElementById("operand2").textContent = operand1 > operand2 ? operand2 : operand1;
+    document.getElementById('operator').textContent = "-";
 
 }
 
